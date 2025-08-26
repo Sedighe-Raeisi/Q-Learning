@@ -26,7 +26,7 @@ $$
 where coefficients $\Xi_i$ are drawn from population-level distributions over candidate equation terms. For this population-level $\Xi \sim \mathcal{N}( \Xi_\text{mean},\Xi_\text{Std.})$ where $\Xi_\text{mean}\sim \text{Horseshoe Dist.}$ and $\Xi_\text{std}\sim\mathcal{N}$. 
 Horseshoe as prior enforce sparsity at both individual and population levels. The resulting posterior distributions capture shared structure across system instances, individual-specific variations, and even multimodal structures.
 
-![image](Figs/One_Fig2rule_them_all.pdf)
+![img_1.png](img.png)
 # Cognetive Reinforcement Learning   
 In this repo, we see the implementation of this method for cognitive reinforcement Learning.
 
