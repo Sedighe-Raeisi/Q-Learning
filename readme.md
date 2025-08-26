@@ -4,13 +4,10 @@ Understanding individual differences in dynamical systems across experimental pa
 
 To address this limitation, we introduce a novel method that integrates **Bayesian hierarchical inference** with the **sparse identification of nonlinear dynamical systems (SINDy)**. This approach enables the discovery of distinct dynamical mechanisms within a wide range of individuals.
 
-We applied this method to diverse dynamical systems, including those in environmental systems, physical systems, and cognitive science. Our approach infers a distribution over model structures while inducing sparsity, allowing us to identify shared and individual-specific mechanisms. The results show that key statistical properties of the synthesized data are accurately recovered, demonstrating the method’s promise in capturing structural differences in processes.
+Here we show how we applied this method to cognitive science. Our approach infers a distribution over model structures while inducing sparsity, allowing us to identify shared and individual-specific mechanisms. The results show that key statistical properties of the synthesized data are accurately recovered, demonstrating the method’s promise in capturing structural differences in processes.
 
 A key application of AI in science is the development of data-driven methods for discovering the governing models of dynamical systems. One of the major challenges is accounting for differences between individuals, where an "individual" could be a human, a different environmental location, or a specific circuit. When considering these differences, it is necessary to move beyond a single, universal model.
 
-Our work builds on the SINDy approach, a data-driven model discovery method that combines regression and sparsity. We specifically adopt a **Bayesian approach to SINDy**, which is especially useful when system dynamics are affected by noise. A Bayesian method allows us to find the true distributions of model parameters. To prevent the survival of unrelated terms, we induce sparsity by using an appropriate prior distribution, specifically the powerful **Horseshoe distribution**.
-
-However, if a system's dynamics differ among individuals, the governing model itself should be a distribution, not just the mean of a noisy distribution. To achieve this, we use a **Hierarchical Bayesian model**. We apply the Horseshoe distribution as the prior for the mean of each candidate term's coefficient, which successfully induces sparsity. The following sections explain this method and its applications.
 
 ---
 ## Method 
@@ -20,9 +17,18 @@ $$
     \dot{X}_i = \Theta(X_i)\Xi_i + \eta Z_i,
 $$
 
-where coefficients $\Xi_i$ are drawn from population-level distributions over candidate equation terms. This hierarchical prior allows terms to be present in some individuals but absent in others, while Horseshoe priors enforce sparsity at both individual and population levels (see Figure \ref{fig:placeholder}). The resulting posterior distributions capture shared structure across system instances, individual-specific variations, and even multimodal structures (e.g., subpopulations governed by distinct dynamics). We approximate these posteriors using MCMC inference, enabling recovery of universal components and population heterogeneity in dynamical systems. Hierarchical Bayesian SINDy thus disentangles noise-driven uncertainty from genuine structural differences, providing a  framework for equation discovery in populations of systems.
+where coefficients $\Xi_i$ are drawn from population-level distributions over candidate equation terms. This hierarchical prior allows terms to be present in some individuals but absent in others, Each individual $i$ is modeled as
+
+$$
+    \dot{X}_i = \Theta(X_i)\Xi_i + \eta Z_i,
+$$
+
+where coefficients $\Xi_i$ are drawn from population-level distributions over candidate equation terms. For this population-level $\Xi \sim \mathcal{N}( \Xi_\text{mean},\Xi_\text{Std.})$ where $\Xi_\text{mean}\sim \text{Horseshoe Dist.}$ and $\Xi_\text{std}\sim\mathcal{N}$. 
+Horseshoe as prior enforce sparsity at both individual and population levels. The resulting posterior distributions capture shared structure across system instances, individual-specific variations, and even multimodal structures.
+
+![image](Figs/One_Fig2rule_them_all.pdf)
 # Cognetive Reinforcement Learning   
-In this chapter, we see the implementation of this method for cognitive reinforcement Learning.
+In this repo, we see the implementation of this method for cognitive reinforcement Learning.
 
 ## Problem 
 In the RL approach to explain the data of the decision-making task, we use the choice, the reward, and a latent variable, q-value to explain the mechanism of making a decision.   
