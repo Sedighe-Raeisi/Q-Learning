@@ -1,17 +1,28 @@
+# Introduction
+
+Understanding individual differences in dynamical systems across experimental paradigms remains a fundamental challenge. Traditional modeling approaches often assume a fixed model structure, allowing for variations only in parameter values. However, the true underlying model may differ not only in parameter magnitudes but also in structure across observational conditions.
+
+To address this limitation, we introduce a novel method that integrates **Bayesian hierarchical inference** with the **sparse identification of nonlinear dynamical systems (SINDy)**. This approach enables the discovery of distinct dynamical mechanisms within a wide range of individuals.
+
+We applied this method to diverse dynamical systems, including those in environmental systems, physical systems, and cognitive science. Our approach infers a distribution over model structures while inducing sparsity, allowing us to identify shared and individual-specific mechanisms. The results show that key statistical properties of the synthesized data are accurately recovered, demonstrating the method’s promise in capturing structural differences in processes.
+
+A key application of AI in science is the development of data-driven methods for discovering the governing models of dynamical systems. One of the major challenges is accounting for differences between individuals, where an "individual" could be a human, a different environmental location, or a specific circuit. When considering these differences, it is necessary to move beyond a single, universal model.
+
+Our work builds on the SINDy approach, a data-driven model discovery method that combines regression and sparsity. We specifically adopt a **Bayesian approach to SINDy**, which is especially useful when system dynamics are affected by noise. A Bayesian method allows us to find the true distributions of model parameters. To prevent the survival of unrelated terms, we induce sparsity by using an appropriate prior distribution, specifically the powerful **Horseshoe distribution**.
+
+However, if a system's dynamics differ among individuals, the governing model itself should be a distribution, not just the mean of a noisy distribution. To achieve this, we use a **Hierarchical Bayesian model**. We apply the Horseshoe distribution as the prior for the mean of each candidate term's coefficient, which successfully induces sparsity. The following sections explain this method and its applications.
+
+---
+## Method 
+SINDy recovers dynamical equations from time-series data by expressing derivatives $\dot{X}$ as sparse linear combinations of possibly non-linear equation terms $\Theta(X)\Xi$ \citep{brunton2016discovering}. Sparsity in $\Xi$ identifies a small subset of candidate terms needed to fit the time series. Bayesian SINDy extends this approach to noisy data, inferring posterior distributions over coefficients and inducing sparsity via priors such as the regularized Horseshoe \citep{hirsh2022sparsifying}. However, this approach assumes a single model structure if data is pooled from multiple instances of a system, treating system variability as parameter noise. To capture structural variability across system instances (``individuals''), we propose hierarchical Bayesian SINDy illustrated in Figure \ref{fig:placeholder}. Each individual $i$ is modeled as
+
+$$
+    \dot{X}_i = \Theta(X_i)\Xi_i + \eta Z_i,
+$$
+
+where coefficients $\Xi_i$ are drawn from population-level distributions over candidate equation terms. This hierarchical prior allows terms to be present in some individuals but absent in others, while Horseshoe priors enforce sparsity at both individual and population levels (see Figure \ref{fig:placeholder}). The resulting posterior distributions capture shared structure across system instances, individual-specific variations, and even multimodal structures (e.g., subpopulations governed by distinct dynamics). We approximate these posteriors using MCMC inference, enabling recovery of universal components and population heterogeneity in dynamical systems. Hierarchical Bayesian SINDy thus disentangles noise-driven uncertainty from genuine structural differences, providing a  framework for equation discovery in populations of systems.
 # Cognetive Reinforcement Learning   
 In this chapter, we see the implementation of this method for cognitive reinforcement Learning.
-## Getting Started
-If you face a problem with the graphiz path, you can use this instruction:   
-[link](https://www.pythonclear.com/errors/failed-to-execute-windowspathdot-make-sure-the-graphviz-executables-are-on-your-systems-path/?form=MG0AV3)   
-and change os command in plot_model.py
-<!--In terminal run:
-- pip install -q git+https://github.com/dynamicslab/pysindy.git
-- pip install -q pyro-ppl
-- pip uninstall numpyro
-- pip install -q numpyro@git+https://github.com/pyro-ppl/numpyro
-- pip install -U jax  
-- pip install arviz
-- conda install python-graphviz-->
 
 ## Problem 
 In the RL approach to explain the data of the decision-making task, we use the choice, the reward, and a latent variable, q-value to explain the mechanism of making a decision.   
@@ -39,27 +50,13 @@ Some of them are:
 
 
 
-
-
-## 1- Uniform distribution, modeled by Non-Hierarchical Bayesian inference 
-In the first step, we considered that the coefficient of each term is the same for all individuals in the population. We used the Bayesian-Sindy to extract the model that relates the Q-value to its previous value. 
-In this approach, we prepare a list of all candidate terms for the dataset of y=Q and x=Q_1. These may include different possible linear combinations of x up to 2 orders. 
-Then, by using the Horseshoe distribution as a prior for the coefficient of each term, we retrieve their posterior distribution.   
-
-![image](https://github.com/user-attachments/assets/6f6ccd12-709b-45f0-9937-ee2e1c6fab8c)
-
-
-It is shown that for non-existing terms, the posterior distribution will have a mean close to zero. 
-For existing terms, the posterior distribution will have a mean approximately equal to its ground truth value.    
-
-![image](https://github.com/user-attachments/assets/67faac76-54e2-46b8-b4c9-4ae5e11ce181)
-
-
-## 2- Mixed distribution, modeled by Hierarchical Bayesian inference 
-In the second step, we considered that the coefficient of some terms is different for each individual in the population. At first, we used non-hierarchical Bayesian SINDy. We observed that although the means of distribution of each term were successfully retrieved, the standard deviation wasn't recovered. Therefore, we used the Bayesian-Sindy with a Hierarchical structure to extract the model that relates the Q-value to its previous value.   
-
-![image](https://github.com/Sedighe-Raeisi/BH_PKG/blob/main/Example/test_HS_model.png?raw=true)
-
+---
+# Results
+We applieed this method to a condition that the learning mechanism is shared among individuals, but the forget mechanism is a Non-shared mechanism. 
+Here you can see the result of our approach.
+![row_kde_plot_with_table.jpg](Cognetive_RL_Data/CRL_chk_20250826_0934/row_kde_plot_with_table.jpg)
+As it is visible it can recover the ground truth distribution. Even it can capture its multi-modality form.
+![custom_plot.jpg](Cognetive_RL_Data/custom_plot.jpg)
 
   
 
@@ -68,23 +65,12 @@ In the second step, we considered that the coefficient of some terms is differen
 We could see that both mean and standard deviation matched their corresponding ground truth values.   
 
 ![image](https://github.com/user-attachments/assets/68cc91a0-2960-4a37-a6ba-f333b067d608)
-
-
-## 3- Non-shared mechanism 
-In the third step, we consider a feature like forget-rate to be non-shared in the population. 
-It means that for a portion of the population, the coefficient of this term is zero, for the rest of the population, we might consider different scenarios.  
-It will result in the existence of a peak in the distribution alongside another distribution. 
-The result for all features:  
-
-![image](https://github.com/user-attachments/assets/78cb384c-1982-4a83-8a78-b8864916b997)
-    
-
-In this condition, we expect the model to predict the peak portion accurately. So the model should be able to recover :
-- portion of the zero peak
-- mean of non-zero distribution
-- standard deviation of non-zero distribution
-
-![image](https://github.com/user-attachments/assets/c6c828e8-24cc-45a0-8ee4-7339231eb4fc)
+We also compared the results of Flat Bayesian SINDy and Hierachical approach:
+  
+| Model | LPD-LOO | WAIC |
+|---|---|---|
+| Hierarchical Bayesian | 90158.9 | 90158.8 |
+| Flat Bayesian | 20959.1 | 20959.1 |
 
 
   
