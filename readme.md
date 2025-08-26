@@ -64,7 +64,7 @@ As it is visible it can recover the ground truth distribution. Even it can captu
 
 We could see that both mean and standard deviation matched their corresponding ground truth values.   
 
-![image](https://github.com/user-attachments/assets/68cc91a0-2960-4a37-a6ba-f333b067d608)
+
 We also compared the results of Flat Bayesian SINDy and Hierachical approach:
   
 | Model | LPD-LOO | WAIC |
