@@ -1,0 +1,14 @@
+# Ignore all files in a folders:
+
+examples/Cognetive_RL/Result
+Cognetive_RL_Data/CRL_chk_20250826_0934/mcmc_module.pkl
+Cognetive_RL_Data/CRL_chk_20250826_0934/mcmc_samples.npz
+Cognetive_RL_Data/CRL_chk_20250826_0934/mcmc_samples.pkl
+Cognetive_RL_Data/CRL_chk_20250826_0934/stationary_mcmc_samples.pkl
+# Ignore all files with a .log extension
+*.log
+
+*.npz
+*.xml
+*.ml
+
