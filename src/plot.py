@@ -468,7 +468,7 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
 
         # Plot in the dedicated subplot row
         # axi = fig.add_subplot(gs[1 * row_plot_idx + 1, col])
-        axi = plt.subplot2grid((n_rows, n_cols + 1),(row_plot_idx,col),colspan=1,fig=fig)
+        axi = plt.subplot2grid((n_rows, n_cols + 1),(1,col),colspan=1,fig=fig)
         # used_axes.append(axi)
 
         try:
@@ -518,7 +518,7 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
         axi.axis('off')
 
     # Add the table to the last column, spanning all 2*n_rows
-    ax_table = plt.subplot2grid((n_rows, n_cols + 1), (0, n_cols), colspan=1, rowspan=n_rows,fig=fig)
+    ax_table = plt.subplot2grid((n_rows, n_cols + 1), (1, n_cols), colspan=1, rowspan=n_rows,fig=fig)
     ax_table.axis('off')
 
     if missed_coef_data:
