@@ -494,7 +494,7 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
         if true_params:
             axi.axvline(gt_mean, color=gt_color, linestyle='--', label=f'gt_mean = {gt_mean:.3f}')
 
-        axi.set_xlabel(f"{eqs[eq_i]}\ncoef : {coef_names[index[1]]}", fontsize=xlabel_fontsize)
+        axi.set_xlabel(f"{eqs[eq_i].split("=")[0]}\ncoef : {coef_names[index[1]]}", fontsize=xlabel_fontsize)
         axi.set_ylabel(" ", fontsize=xlabel_fontsize)
         axi.xaxis.set_major_locator(plt.MaxNLocator(3))
         axi.set_yticks(np.array([0]))
@@ -542,9 +542,9 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
                     cell.set_facecolor('white')
 
         table.auto_set_font_size(False)
-        table.set_fontsize(6)
+        table.set_fontsize(xlabel_fontsize-10)
         table.scale(1, 1.5)
-        ax_table.set_title('Other Coefficients', fontsize=12)
+        ax_table.set_title('Other Coefficients', fontsize=24)
 
     # Use tight_layout to handle spacing between GridSpec cells
     plt.tight_layout()
