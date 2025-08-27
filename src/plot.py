@@ -476,13 +476,13 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
                         warn_singular=False, linewidth=3,ls='--',label="Hierarchical Bayesian")
             if true_params:
                 sns.kdeplot(gt_coef_array[index[0], index[1], :], ax=axi, fill=True, color=gt_color, alpha=.4,
-                            warn_singular=False, linewidth=1,ls=":",label="Ground Truth")
+                            warn_singular=False, linewidth=5,ls=":",label="Ground Truth")
         except:
             sns.kdeplot(est_coef_mean_arr[:, index[1], index[0]], ax=axi, fill=True, color=est_color, alpha=.4,
                         warn_singular=False, linewidth=3,ls="--",label="Hierarchical Bayesian")
             if true_params:
                 sns.kdeplot(gt_coef_array[index[0], index[1], :], ax=axi, fill=True, color=gt_color, alpha=.2,
-                            warn_singular=False, linewidth=1,ls=":",label="Ground Truth")
+                            warn_singular=False, linewidth=5,ls=":",label="Ground Truth")
 
         est_mean = np.mean(est_coef_mean_arr[:, index[1], index[0]])
         est_std = np.std(est_coef_mean_arr[:, index[1], index[0]])
@@ -490,9 +490,9 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
             gt_mean = np.mean(gt_coef_array[index[0], index[1], :])
             gt_std = np.std(gt_coef_array[index[0], index[1], :])
 
-        axi.axvline(est_mean, color=est_color, linestyle='--', label=f'est_mean = {est_mean:.3f}')
+        axi.axvline(est_mean, color=est_color, linestyle='--', label=f'est_mean = {est_mean:.3f}',alpha=0.5,linewidth=3)
         if true_params:
-            axi.axvline(gt_mean, color=gt_color, linestyle='--', label=f'gt_mean = {gt_mean:.3f}')
+            axi.axvline(gt_mean, color=gt_color, linestyle=':', label=f'gt_mean = {gt_mean:.3f}',linewidth=5)
 
         axi.set_xlabel(f"{eqs[eq_i].split("=")[0]}\ncoef : {coef_names[index[1]]}", fontsize=xlabel_fontsize)
         axi.set_ylabel(" ", fontsize=xlabel_fontsize)
