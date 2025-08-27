@@ -33,10 +33,10 @@ elif mode == "row_plot":
     to_plot = [[0, 1], [0, 2]]
     true_params_file_str = f"chk_GT_Data.pkl"
     save_path = os.path.join(root_path, [file for file in os.listdir(root_path) if file.startswith(save_dir_prefix)][0])
-    plot_dict = {"est_color": "blue", "gt_color": "green", "legend": None, "xlabel_fontsize": 20, "title_fontsize": None}
+    plot_dict = {"est_color": "blue", "gt_color": "green", "legend": True, "xlabel_fontsize": 20, "title_fontsize": None}
     row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
-               fighigth=6, figwidth=20,
-               n_rows=3, n_cols=2,
+               fighigth=6, figwidth=18,
+               n_rows=1, n_cols=2,
                scaler=None, to_plot=to_plot, plot_dict=plot_dict)
 elif mode=="plot":
 

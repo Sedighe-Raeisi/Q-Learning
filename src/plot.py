@@ -468,21 +468,21 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
 
         # Plot in the dedicated subplot row
         # axi = fig.add_subplot(gs[1 * row_plot_idx + 1, col])
-        axi = plt.subplot2grid((n_rows, n_cols + 1),(1,col),colspan=1,fig=fig)
+        axi = plt.subplot2grid((n_rows, n_cols + 1),(row_plot_idx,col),colspan=1,fig=fig)
         # used_axes.append(axi)
 
         try:
             sns.kdeplot(est_coef_mean_arr[:, index[1], index[0]], ax=axi, fill=True, color=est_color, alpha=.4,
-                        warn_singular=False, linewidth=3)
+                        warn_singular=False, linewidth=3,ls='--',label="Hierarchical Bayesian")
             if true_params:
                 sns.kdeplot(gt_coef_array[index[0], index[1], :], ax=axi, fill=True, color=gt_color, alpha=.4,
-                            warn_singular=False, linewidth=1)
+                            warn_singular=False, linewidth=1,ls=":",label="Ground Truth")
         except:
             sns.kdeplot(est_coef_mean_arr[:, index[1], index[0]], ax=axi, fill=True, color=est_color, alpha=.4,
-                        warn_singular=False, linewidth=3)
+                        warn_singular=False, linewidth=3,ls="--",label="Hierarchical Bayesian")
             if true_params:
                 sns.kdeplot(gt_coef_array[index[0], index[1], :], ax=axi, fill=True, color=gt_color, alpha=.2,
-                            warn_singular=False, linewidth=1)
+                            warn_singular=False, linewidth=1,ls=":",label="Ground Truth")
 
         est_mean = np.mean(est_coef_mean_arr[:, index[1], index[0]])
         est_std = np.std(est_coef_mean_arr[:, index[1], index[0]])
@@ -503,9 +503,10 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
         axi.spines['left'].set_visible(False)
         axi.spines['top'].set_visible(False)
         axi.spines['right'].set_visible(False)
+        if col == n_cols - 1 and row_plot_idx == 0:
+            axi.legend(loc='center left', bbox_to_anchor=(.9, 1.03))
         if legend_True:
-            axi.legend(loc='upper center', bbox_to_anchor=(0.5, 1.03), ncol=1, fancybox=True, shadow=True, fontsize=8)
-
+            axi.legend(loc='upper center', bbox_to_anchor=(0.9, 1.03), ncol=1, fancybox=True, shadow=True, fontsize=8)
         plot_counter += 1
         axi.set_xlim(0,2)
 
@@ -518,7 +519,7 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
         axi.axis('off')
 
     # Add the table to the last column, spanning all 2*n_rows
-    ax_table = plt.subplot2grid((n_rows, n_cols + 1), (1, n_cols), colspan=1, rowspan=n_rows,fig=fig)
+    ax_table = plt.subplot2grid((n_rows, n_cols + 1), (0, n_cols), colspan=1, rowspan=n_rows,fig=fig)
     ax_table.axis('off')
 
     if missed_coef_data:
@@ -542,8 +543,9 @@ def row_result(save_path, gt_utils, realparame2gtarray, true_params_file_str,
                     cell.set_facecolor('white')
 
         table.auto_set_font_size(False)
-        table.set_fontsize(xlabel_fontsize-10)
-        table.scale(1, 1.5)
+        table.set_fontsize(xlabel_fontsize-4)
+        # table.scale(1, 1.5)
+        table.scale(1, 4.0)
         ax_table.set_title('Other Coefficients', fontsize=24)
 
     # Use tight_layout to handle spacing between GridSpec cells
