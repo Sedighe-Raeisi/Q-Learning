@@ -170,13 +170,13 @@ def Custom_plot(generate_pdf, ground_truth = True, HB_Est = True, FlatB_Est = Tr
                 print(pdf_arr.shape)
                 sns.kdeplot(pdf_arr[index[0], index[1],:], ax=axi, fill=pdf_fill, color=pdf_color, alpha=.6,
                             warn_singular=False, linewidth=4,label="Generator Distribution PDF")
-                # data = pdf_arr[index[0], index[1],:]
-                # kernel = gaussian_kde(data)
-                # x_values = np.linspace(min(data), max(data), 100)
-                # y_values = kernel(x_values)
-                # kernel = gaussian_kde(data)
-                # peak_y = np.max(y_values)
-                # y_lim = max(y_lim, peak_y)
+                data = pdf_arr[index[0], index[1],:]
+                kernel = gaussian_kde(data)
+                x_values = np.linspace(min(data), max(data), 100)
+                y_values = kernel(x_values)
+                kernel = gaussian_kde(data)
+                peak_y = np.max(y_values)
+                y_lim = max(y_lim, peak_y)
 
         except:
             if HB_Est:
