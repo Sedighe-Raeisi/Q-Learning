@@ -73,10 +73,10 @@ We could see that both mean and standard deviation matched their corresponding g
 
 We also compared the results of Flat Bayesian SINDy and Hierachical approach:
   
-| Model | LPD-LOO | WAIC |
-|---|---|---|
-| Hierarchical Bayesian | 90158.9 | 90158.8 |
-| Flat Bayesian | 20959.1 | 20959.1 |
+| Model | ELPD-LOO | WAIC |
+|---|----------|---|
+| Hierarchical Bayesian | 90158.9  | 90158.8 |
+| Flat Bayesian | 20959.1  | 20959.1 |
 
 
   
